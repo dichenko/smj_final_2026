@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Администрирование — 3 ручки</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container admin-container">
+    <h1>Администрирование</h1>
+
+    <div class="admin-toolbar">
+      <input type="text" class="search-input" id="search" placeholder="Поиск по тексту...">
+      <div class="admin-filters">
+        <button class="filter-btn active" data-section="all">Все</button>
+        <button class="filter-btn" data-section="green">Успех</button>
+        <button class="filter-btn" data-section="blue">Ляп</button>
+        <button class="filter-btn" data-section="red">Инсайт</button>
+      </div>
+    </div>
+
+    <div id="table-container">
+      <div class="loading">Загрузка...</div>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+  <div class="modal-overlay" id="edit-modal" style="display:none">
+    <div class="modal">
+      <h3>Редактировать ответ</h3>
+      <textarea id="edit-textarea"></textarea>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="modal-cancel">Отмена</button>
+        <button class="btn-save" id="modal-save">Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

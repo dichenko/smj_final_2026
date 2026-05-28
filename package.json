@@ -1,0 +1,14 @@
+{
+  "name": "tri-ruchki",
+  "version": "1.0.0",
+  "description": "Игра 3 ручки - веб-сервис для корпоративной встречи",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.21.0",
+    "pg": "^8.13.0"
+  }
+}

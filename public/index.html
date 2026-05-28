@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3 ручки</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <main class="container form-container">
+    <h1>3 ручки</h1>
+    <p class="subtitle">Заполните один, два или три ответа</p>
+
+    <form id="answers-form" class="answer-form">
+      <label class="single-field single-field-success">
+        <span>Успех</span>
+        <textarea name="success" data-field="success" placeholder="Что получилось хорошо?"></textarea>
+      </label>
+
+      <label class="single-field single-field-lapse">
+        <span>Ляп</span>
+        <textarea name="lapse" data-field="lapse" placeholder="Что пошло не так или вышло неловко?"></textarea>
+      </label>
+
+      <label class="single-field single-field-insight">
+        <span>Инсайт</span>
+        <textarea name="insight" data-field="insight" placeholder="Какой вывод или мысль хочется забрать?"></textarea>
+      </label>
+
+      <button type="submit" class="btn-submit">Отправить</button>
+    </form>
+
+    <section class="thanks-panel" id="thanks-panel" hidden>
+      <h2>Спасибо!</h2>
+    </section>
+  </main>
+
+  <script src="/js/form.js"></script>
+</body>
+</html>
