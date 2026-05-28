@@ -10,6 +10,9 @@ function showToast(message) {
 }
 
 function showThanks() {
+  var button = form.querySelector('.btn-submit');
+  button.textContent = 'Отправить';
+  button.disabled = false;
   form.hidden = true;
   thanksPanel.hidden = false;
 }
