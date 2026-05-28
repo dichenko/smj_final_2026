@@ -60,15 +60,18 @@ jobs:
           VPS_PATH: ${{ secrets.VPS_PATH }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           ADMIN_SECRET: ${{ secrets.ADMIN_SECRET }}
+          APP_PORT: ${{ secrets.APP_PORT }}
         run: |
           set -euo pipefail
           PORT="${VPS_PORT:-22}"
           TARGET_PATH="${VPS_PATH:-/opt/smj_final_2026}"
+          PUBLIC_APP_PORT="${APP_PORT:-3000}"
           ENV_FILE="$(mktemp)"
 
           {
             printf 'DB_PASSWORD=%s\n' "$DB_PASSWORD"
             printf 'ADMIN_SECRET=%s\n' "$ADMIN_SECRET"
+            printf 'APP_PORT=%s\n' "$PUBLIC_APP_PORT"
           } > "$ENV_FILE"
 
           scp -i ~/.ssh/deploy_key -P "$PORT" "$ENV_FILE" "$VPS_USER@$VPS_HOST:$TARGET_PATH/.env"
