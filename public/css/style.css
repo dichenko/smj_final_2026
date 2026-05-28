@@ -150,7 +150,7 @@ h1 {
 .public-page {
   min-height: 100vh;
   overflow: hidden;
-  background: #f7f6f2;
+  background: #fff;
 }
 
 .public-layout {
@@ -164,23 +164,13 @@ h1 {
   place-items: center;
   min-height: 100vh;
   padding: 32px;
-  background:
-    linear-gradient(135deg, rgba(31, 122, 140, 0.16), rgba(196, 87, 63, 0.12)),
-    #ece7df;
-  border-right: 1px solid rgba(31, 36, 40, 0.12);
+  background: transparent;
 }
 
-.placeholder-mark {
-  display: grid;
-  place-items: center;
-  width: min(72%, 420px);
-  aspect-ratio: 4 / 5;
-  border: 2px dashed rgba(31, 36, 40, 0.28);
-  border-radius: 8px;
-  color: rgba(31, 36, 40, 0.45);
-  font-size: 1.1rem;
-  font-weight: 700;
-  background: rgba(255, 255, 255, 0.35);
+.public-illustration {
+  display: block;
+  width: min(72%, 460px);
+  height: auto;
 }
 
 .responses-panel {
@@ -194,12 +184,7 @@ h1 {
   grid-template-rows: auto minmax(0, 1fr);
   min-height: 0;
   padding: 18px 22px;
-  border-bottom: 1px solid rgba(31, 36, 40, 0.1);
-  background: #fff;
-}
-
-.response-section:last-child {
-  border-bottom: 0;
+  background: transparent;
 }
 
 .response-section header {
@@ -229,55 +214,81 @@ h1 {
 }
 
 .toggle-section {
-  min-width: 88px;
-  min-height: 34px;
-  padding: 7px 12px;
-  border: 1px solid #ccd2d7;
-  border-radius: 8px;
-  background: #f9fafb;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
   color: #202529;
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 650;
-  transition: background 0.18s, border-color 0.18s;
+  font-size: 1.35rem;
+  line-height: 1;
+  font-weight: 500;
+  transition: color 0.18s, transform 0.18s;
 }
 
 .toggle-section:hover {
-  background: #eef2f5;
-  border-color: #aeb8c0;
+  color: #667078;
+  transform: scale(1.08);
 }
 
 .response-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 8px;
   min-height: 0;
   overflow-y: auto;
   padding-right: 4px;
 }
 
 .response-list:not(.is-visible) {
+  display: block;
   overflow: hidden;
 }
 
 .response-item {
+  position: relative;
+  flex: 0 1 220px;
+  min-height: 44px;
   padding: 10px 12px;
-  margin-bottom: 8px;
-  border-radius: 8px;
-  background: #f4f6f7;
-  color: #24292e;
-  line-height: 1.4;
+  border-radius: 6px;
+  color: #fff;
+  line-height: 1.25;
   word-break: break-word;
-  white-space: pre-wrap;
+  cursor: default;
 }
 
 .response-success .response-item {
-  border-left: 4px solid #2f8f5b;
+  background: #1f6b42;
 }
 
 .response-lapse .response-item {
-  border-left: 4px solid #c4573f;
+  background: #8f3929;
 }
 
 .response-insight .response-item {
-  border-left: 4px solid #2f66b3;
+  background: #1d4d8f;
+}
+
+.response-item:hover::after,
+.response-item:focus-visible::after {
+  content: attr(data-full);
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  z-index: 30;
+  width: max-content;
+  max-width: min(420px, 70vw);
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #202529;
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(31, 36, 40, 0.22);
+  font-size: 0.9rem;
+  line-height: 1.35;
+  white-space: pre-wrap;
 }
 
 .empty-section {
@@ -291,8 +302,7 @@ h1 {
   bottom: 10px;
   z-index: 20;
   padding: 5px 8px;
-  border-radius: 8px;
-  background: rgba(31, 36, 40, 0.18);
+  background: transparent;
   color: rgba(31, 36, 40, 0.55);
   font-size: 0.78rem;
   line-height: 1;
@@ -574,13 +584,10 @@ h1 {
 
   .illustration-placeholder {
     min-height: 220px;
-    border-right: 0;
-    border-bottom: 1px solid rgba(31, 36, 40, 0.12);
   }
 
-  .placeholder-mark {
+  .public-illustration {
     width: min(260px, 80%);
-    aspect-ratio: 16 / 9;
   }
 
   .responses-panel {
@@ -616,7 +623,7 @@ h1 {
   }
 
   .toggle-section {
-    min-width: 82px;
+    width: 28px;
   }
 
   .admin-table {

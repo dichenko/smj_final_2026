@@ -12,6 +12,22 @@ function escapeText(text) {
   return node.innerHTML;
 }
 
+function escapeAttr(text) {
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function shortenText(text) {
+  if (text.length <= 50) {
+    return text;
+  }
+  return text.slice(0, 47).trimEnd() + '...';
+}
+
 function groupItems(items) {
   var grouped = {
     green: [],
@@ -33,7 +49,9 @@ function renderSection(section) {
   var button = document.querySelector('.toggle-section[data-section="' + section + '"]');
   var sectionState = state[section];
 
-  button.textContent = sectionState.visible ? 'Скрыть' : 'Показать';
+  button.textContent = sectionState.visible ? '-' : '+';
+  button.setAttribute('aria-label', sectionState.visible ? 'Скрыть' : 'Показать');
+  button.setAttribute('aria-expanded', sectionState.visible ? 'true' : 'false');
   list.classList.toggle('is-visible', sectionState.visible);
 
   if (!sectionState.visible) {
@@ -47,7 +65,9 @@ function renderSection(section) {
   }
 
   list.innerHTML = sectionState.items.map(function(item) {
-    return '<div class="response-item">' + escapeText(item.text) + '</div>';
+    return '<div class="response-item" tabindex="0" data-full="' + escapeAttr(item.text) + '">' +
+      escapeText(shortenText(item.text)) +
+      '</div>';
   }).join('');
 }
 
