@@ -11,7 +11,9 @@ app.set('trust proxy', true);
 const PORT = process.env.PORT || 3000;
 
 const ADMIN_SECRET = process.env.ADMIN_SECRET || crypto.randomBytes(48).toString('hex');
-const ADMIN_PATH = `/admin_${ADMIN_SECRET}`;
+const ADMIN_PATH = ADMIN_SECRET.startsWith('admin_')
+  ? `/${ADMIN_SECRET}`
+  : `/admin_${ADMIN_SECRET}`;
 
 app.locals.adminPath = ADMIN_PATH;
 
