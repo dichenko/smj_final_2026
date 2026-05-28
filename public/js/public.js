@@ -1,5 +1,5 @@
 var state = {
-  green: { visible: false, items: [] },
+  green: { visible: true, items: [] },
   blue: { visible: false, items: [] },
   red: { visible: false, items: [] }
 };
@@ -52,6 +52,7 @@ function renderSection(section) {
   button.textContent = sectionState.visible ? '-' : '+';
   button.setAttribute('aria-label', sectionState.visible ? 'Скрыть' : 'Показать');
   button.setAttribute('aria-expanded', sectionState.visible ? 'true' : 'false');
+  button.closest('.response-section').classList.toggle('is-open', sectionState.visible);
   list.classList.toggle('is-visible', sectionState.visible);
 
   if (!sectionState.visible) {
@@ -100,8 +101,10 @@ function loadResponses() {
 document.querySelectorAll('.toggle-section').forEach(function(button) {
   button.addEventListener('click', function() {
     var section = button.getAttribute('data-section');
-    state[section].visible = !state[section].visible;
-    renderSection(section);
+    sectionOrder.forEach(function(item) {
+      state[item].visible = item === section;
+    });
+    renderAll();
   });
 });
 

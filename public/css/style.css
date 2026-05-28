@@ -174,17 +174,26 @@ h1 {
 }
 
 .responses-panel {
-  display: grid;
-  grid-template-rows: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  height: 100vh;
 }
 
 .response-section {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto 0fr;
+  flex: 0 0 auto;
   min-height: 0;
   padding: 18px 22px;
   background: transparent;
+  overflow: hidden;
+  transition: flex 0.22s ease, grid-template-rows 0.22s ease;
+}
+
+.response-section.is-open {
+  grid-template-rows: auto minmax(0, 1fr);
+  flex: 1 1 auto;
 }
 
 .response-section header {
@@ -244,7 +253,7 @@ h1 {
 }
 
 .response-list:not(.is-visible) {
-  display: block;
+  display: flex;
   overflow: hidden;
 }
 
@@ -592,10 +601,10 @@ h1 {
 
   .responses-panel {
     min-height: calc(100vh - 220px);
+    height: calc(100vh - 220px);
   }
 
   .response-section {
-    min-height: 33vh;
     padding: 16px;
   }
 }
