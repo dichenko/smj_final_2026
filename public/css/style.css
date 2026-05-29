@@ -169,7 +169,7 @@ h1 {
 
 .public-illustration {
   display: block;
-  width: min(72%, 460px);
+  width: min(95%, 560px);
   height: auto;
 }
 
