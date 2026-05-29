@@ -44,6 +44,13 @@ function groupItems(items) {
   return grouped;
 }
 
+function openSection(section) {
+  sectionOrder.forEach(function(item) {
+    state[item].visible = item === section;
+  });
+  renderAll();
+}
+
 function renderSection(section) {
   var list = document.getElementById('list-' + section);
   var button = document.querySelector('.toggle-section[data-section="' + section + '"]');
@@ -98,13 +105,16 @@ function loadResponses() {
     });
 }
 
+document.querySelectorAll('.response-section header').forEach(function(header) {
+  header.addEventListener('click', function() {
+    openSection(header.closest('.response-section').getAttribute('data-section'));
+  });
+});
+
 document.querySelectorAll('.toggle-section').forEach(function(button) {
-  button.addEventListener('click', function() {
-    var section = button.getAttribute('data-section');
-    sectionOrder.forEach(function(item) {
-      state[item].visible = item === section;
-    });
-    renderAll();
+  button.addEventListener('click', function(event) {
+    event.stopPropagation();
+    openSection(button.getAttribute('data-section'));
   });
 });
 

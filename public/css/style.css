@@ -203,11 +203,14 @@ h1 {
   gap: 14px;
   min-height: 40px;
   margin-bottom: 12px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .response-section h2 {
   font-size: 1.2rem;
   line-height: 1.1;
+  pointer-events: none;
 }
 
 .response-success h2 {
