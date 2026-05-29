@@ -29,8 +29,13 @@ function normalizeText(value) {
   return String(value || '').trim();
 }
 
-function csvCell(value) {
-  return `"${String(value || '').replace(/"/g, '""')}"`;
+function xmlCell(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
 }
 
 async function hasSubmitted(client, cookieId) {
@@ -42,6 +47,13 @@ async function hasSubmitted(client, cookieId) {
     [cookieId]
   );
   return Boolean(result.rows[0].submitted);
+}
+
+function requireAdmin(req, res, next) {
+  if (req.cookies.admin_token !== req.app.locals.adminToken) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+  next();
 }
 
 router.get('/answers/status', async (req, res) => {
@@ -132,7 +144,7 @@ router.get('/public', async (req, res) => {
   res.json(result.rows);
 });
 
-router.get('/admin', async (req, res) => {
+router.get('/admin', requireAdmin, async (req, res) => {
   const { section, search, page = 1, limit = 20 } = req.query;
   const p = Math.max(1, parseInt(page));
   const l = Math.min(100, Math.max(1, parseInt(limit) || 20));
@@ -169,7 +181,7 @@ router.get('/admin', async (req, res) => {
   res.json({ rows: result.rows, total, page: p, limit: l });
 });
 
-router.get('/admin/export.csv', async (req, res) => {
+router.get('/admin/export.xls', requireAdmin, async (req, res) => {
   const result = await pool.query(
     `SELECT section, text
      FROM answers
@@ -178,20 +190,46 @@ router.get('/admin/export.csv', async (req, res) => {
   );
 
   const rows = result.rows.map(function(row) {
-    return [csvCell(row.text), csvCell(SECTION_LABELS[row.section] || row.section)].join(',');
-  });
+    return [
+      '<Row>',
+      `<Cell><Data ss:Type="String">${xmlCell(row.text)}</Data></Cell>`,
+      `<Cell><Data ss:Type="String">${xmlCell(SECTION_LABELS[row.section] || row.section)}</Data></Cell>`,
+      '</Row>',
+    ].join('');
+  }).join('');
 
-  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-  res.setHeader('Content-Disposition', 'attachment; filename="answers.csv"');
-  res.send('\ufeff' + ['текст,тип'].concat(rows).join('\r\n'));
+  const xml = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<?mso-application progid="Excel.Sheet"?>',
+    '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"',
+    ' xmlns:o="urn:schemas-microsoft-com:office:office"',
+    ' xmlns:x="urn:schemas-microsoft-com:office:excel"',
+    ' xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">',
+    '<Worksheet ss:Name="Ответы">',
+    '<Table>',
+    '<Column ss:Width="420"/>',
+    '<Column ss:Width="110"/>',
+    '<Row>',
+    '<Cell><Data ss:Type="String">текст</Data></Cell>',
+    '<Cell><Data ss:Type="String">тип</Data></Cell>',
+    '</Row>',
+    rows,
+    '</Table>',
+    '</Worksheet>',
+    '</Workbook>',
+  ].join('');
+
+  res.setHeader('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename="answers.xls"');
+  res.send('\ufeff' + xml);
 });
 
-router.delete('/admin/all', async (req, res) => {
+router.delete('/admin/all', requireAdmin, async (req, res) => {
   await pool.query('TRUNCATE TABLE submissions, answers RESTART IDENTITY');
   res.json({ success: true });
 });
 
-router.put('/admin/:id', async (req, res) => {
+router.put('/admin/:id', requireAdmin, async (req, res) => {
   const { id } = req.params;
   const { text } = req.body;
 
@@ -220,7 +258,7 @@ router.put('/admin/:id', async (req, res) => {
   res.json(result.rows[0]);
 });
 
-router.delete('/admin/:id', async (req, res) => {
+router.delete('/admin/:id', requireAdmin, async (req, res) => {
   const { id } = req.params;
 
   await pool.query('UPDATE answers SET parent_id = NULL WHERE parent_id = $1', [id]);

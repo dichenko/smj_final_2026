@@ -14,8 +14,10 @@ const ADMIN_SECRET = process.env.ADMIN_SECRET || crypto.randomBytes(48).toString
 const ADMIN_PATH = ADMIN_SECRET.startsWith('admin_')
   ? `/${ADMIN_SECRET}`
   : `/admin_${ADMIN_SECRET}`;
+const ADMIN_TOKEN = crypto.createHash('sha256').update(ADMIN_SECRET).digest('hex');
 
 app.locals.adminPath = ADMIN_PATH;
+app.locals.adminToken = ADMIN_TOKEN;
 
 app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
