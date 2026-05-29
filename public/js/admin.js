@@ -187,6 +187,27 @@ document.querySelectorAll('.admin-filters .filter-btn').forEach(function(button)
   });
 });
 
+document.getElementById('clear-all').addEventListener('click', function() {
+  if (!confirm('Удалить все записи и очистить базу? Это действие нельзя отменить.')) {
+    return;
+  }
+
+  fetch('/api/admin/all', { method: 'DELETE' })
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error('clear failed');
+      }
+      return response.json();
+    })
+    .then(function() {
+      state.page = 1;
+      loadAdmin();
+    })
+    .catch(function() {
+      alert('Ошибка очистки базы');
+    });
+});
+
 document.getElementById('search').addEventListener('input', debounce(function() {
   state.search = this.value;
   state.page = 1;

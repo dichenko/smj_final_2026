@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Администрирование — Коктейль</title>
+  <title>Администрирование - Коктейль</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -17,6 +17,10 @@
         <button class="filter-btn" data-section="green">Успех</button>
         <button class="filter-btn" data-section="blue">Ляп</button>
         <button class="filter-btn" data-section="red">Инсайт</button>
+      </div>
+      <div class="admin-actions">
+        <a class="admin-tool-btn btn-export" href="/api/admin/export.csv" download>Выгрузка в CSV</a>
+        <button type="button" class="admin-tool-btn btn-clear-all" id="clear-all">Удалить всё</button>
       </div>
     </div>
 

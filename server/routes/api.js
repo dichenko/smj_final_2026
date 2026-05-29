@@ -16,11 +16,21 @@ const PUBLIC_SECTION_ALIASES = {
   insight: 'red',
 };
 
+const SECTION_LABELS = {
+  green: 'Успех',
+  blue: 'Ляп',
+  red: 'Инсайт',
+};
+
 function normalizeText(value) {
   if (Array.isArray(value)) {
     return String(value[0] || '').trim();
   }
   return String(value || '').trim();
+}
+
+function csvCell(value) {
+  return `"${String(value || '').replace(/"/g, '""')}"`;
 }
 
 async function hasSubmitted(client, cookieId) {
@@ -157,6 +167,28 @@ router.get('/admin', async (req, res) => {
   );
 
   res.json({ rows: result.rows, total, page: p, limit: l });
+});
+
+router.get('/admin/export.csv', async (req, res) => {
+  const result = await pool.query(
+    `SELECT section, text
+     FROM answers
+     WHERE is_active = TRUE
+     ORDER BY created_at ASC, id ASC`
+  );
+
+  const rows = result.rows.map(function(row) {
+    return [csvCell(row.text), csvCell(SECTION_LABELS[row.section] || row.section)].join(',');
+  });
+
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename="answers.csv"');
+  res.send('\ufeff' + ['текст,тип'].concat(rows).join('\r\n'));
+});
+
+router.delete('/admin/all', async (req, res) => {
+  await pool.query('TRUNCATE TABLE submissions, answers RESTART IDENTITY');
+  res.json({ success: true });
 });
 
 router.put('/admin/:id', async (req, res) => {

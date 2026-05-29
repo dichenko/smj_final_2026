@@ -355,7 +355,14 @@ h1 {
   flex-wrap: wrap;
 }
 
+.admin-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .filter-btn,
+.admin-tool-btn,
 .pagination-btn,
 .page-size-select {
   min-height: 36px;
@@ -365,6 +372,7 @@ h1 {
   background: #fff;
   color: #202529;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .filter-btn.active,
@@ -372,6 +380,16 @@ h1 {
   background: #202529;
   color: #fff;
   border-color: #202529;
+}
+
+.btn-export {
+  border-color: #1f6b42;
+  color: #1f6b42;
+}
+
+.btn-clear-all {
+  border-color: #a64532;
+  color: #a64532;
 }
 
 .pagination {
