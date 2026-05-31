@@ -44,10 +44,14 @@ function groupItems(items) {
   return grouped;
 }
 
-function openSection(section) {
+function toggleSection(section) {
+  var wasOpen = state[section].visible;
   sectionOrder.forEach(function(item) {
-    state[item].visible = item === section;
+    state[item].visible = false;
   });
+  if (!wasOpen) {
+    state[section].visible = true;
+  }
   renderAll();
 }
 
@@ -107,14 +111,14 @@ function loadResponses() {
 
 document.querySelectorAll('.response-section header').forEach(function(header) {
   header.addEventListener('click', function() {
-    openSection(header.closest('.response-section').getAttribute('data-section'));
+    toggleSection(header.closest('.response-section').getAttribute('data-section'));
   });
 });
 
 document.querySelectorAll('.toggle-section').forEach(function(button) {
   button.addEventListener('click', function(event) {
     event.stopPropagation();
-    openSection(button.getAttribute('data-section'));
+    toggleSection(button.getAttribute('data-section'));
   });
 });
 
