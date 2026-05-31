@@ -158,6 +158,7 @@ h1 {
   width: min(320px, 80vw);
   height: auto;
   margin: 0 auto 24px;
+  animation: sway 6s ease-in-out infinite;
 }
 
 .public-page {
@@ -184,6 +185,7 @@ h1 {
   display: block;
   width: min(95%, 560px);
   height: auto;
+  animation: sway 7s ease-in-out infinite;
 }
 
 .responses-panel {
@@ -593,6 +595,11 @@ h1 {
   text-align: center;
   box-shadow: 0 10px 30px rgba(64, 66, 255, 0.3);
   animation: toastIn 0.25s ease, toastOut 0.25s ease 2.75s forwards;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
 }
 
 @keyframes toastIn {
