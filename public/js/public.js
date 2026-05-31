@@ -1,5 +1,5 @@
 var state = {
-  green: { visible: true, items: [] },
+  green: { visible: false, items: [] },
   blue: { visible: false, items: [] },
   red: { visible: false, items: [] }
 };
