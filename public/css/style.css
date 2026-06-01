@@ -622,6 +622,31 @@ h1 {
   }
 }
 
+.reload-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #c4c8cc;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.reload-btn:hover {
+  color: var(--color-text-muted);
+  transform: rotate(30deg);
+}
+
+.reload-btn:active {
+  transform: rotate(180deg);
+}
+
 @media (max-width: 820px) {
   .public-page {
     overflow: auto;
