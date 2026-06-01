@@ -58,14 +58,16 @@ function requireAdmin(req, res, next) {
 
 router.get('/answers/status', async (req, res) => {
   const result = await pool.query(
-    `SELECT
-       EXISTS(SELECT 1 FROM submissions WHERE cookie_id = $1) OR
-       EXISTS(SELECT 1 FROM answers WHERE cookie_id = $1)
-       AS submitted`,
+    'SELECT EXISTS(SELECT 1 FROM submissions WHERE cookie_id = $1) AS submitted',
     [req.userId]
   );
 
   res.json({ submitted: Boolean(result.rows[0].submitted) });
+});
+
+router.post('/answers/reset', async (req, res) => {
+  await pool.query('DELETE FROM submissions WHERE cookie_id = $1', [req.userId]);
+  res.json({ success: true });
 });
 
 router.post('/answers', async (req, res) => {
