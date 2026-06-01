@@ -9,6 +9,9 @@
   --color-bg-soft: #F9F9F9;
   --color-text-main: #111827;
   --color-text-muted: #6B7280;
+  --color-section-success: #5d03c5;
+  --color-section-lapse: #f73c9c;
+  --color-section-insight: #02bbfc;
 }
 
 * {
@@ -102,15 +105,15 @@ h1 {
 }
 
 .single-field-success {
-  border-left-color: var(--color-logo-green);
+  border-left-color: var(--color-section-success);
 }
 
 .single-field-lapse {
-  border-left-color: var(--color-accent-pink);
+  border-left-color: var(--color-section-lapse);
 }
 
 .single-field-insight {
-  border-left-color: var(--color-primary);
+  border-left-color: var(--color-section-insight);
 }
 
 .btn-submit {
@@ -229,15 +232,15 @@ h1 {
 }
 
 .response-success h2 {
-  color: var(--color-logo-green);
+  color: var(--color-section-success);
 }
 
 .response-lapse h2 {
-  color: var(--color-accent-pink);
+  color: var(--color-section-lapse);
 }
 
 .response-insight h2 {
-  color: var(--color-primary);
+  color: var(--color-section-insight);
 }
 
 .toggle-section {
@@ -288,15 +291,15 @@ h1 {
 }
 
 .response-success .response-item {
-  background: var(--color-logo-green);
+  background: var(--color-section-success);
 }
 
 .response-lapse .response-item {
-  background: var(--color-accent-pink);
+  background: var(--color-section-lapse);
 }
 
 .response-insight .response-item {
-  background: var(--color-primary);
+  background: var(--color-section-insight);
 }
 
 .response-item:hover::after,
@@ -398,13 +401,13 @@ h1 {
 }
 
 .btn-export {
-  border-color: var(--color-logo-green);
-  color: var(--color-logo-green);
+  border-color: var(--color-section-success);
+  color: var(--color-section-success);
 }
 
 .btn-clear-all {
-  border-color: var(--color-accent-pink);
-  color: var(--color-accent-pink);
+  border-color: var(--color-section-lapse);
+  color: var(--color-section-lapse);
 }
 
 .pagination {
@@ -458,15 +461,15 @@ h1 {
 }
 
 .section-badge.green {
-  background: var(--color-logo-green);
+  background: var(--color-section-success);
 }
 
 .section-badge.blue {
-  background: var(--color-accent-pink);
+  background: var(--color-section-lapse);
 }
 
 .section-badge.red {
-  background: var(--color-primary);
+  background: var(--color-section-insight);
 }
 
 .text-cell {
@@ -508,8 +511,17 @@ h1 {
 }
 
 .btn-delete {
-  background: #FFE5EF;
-  color: var(--color-accent-pink);
+  background: #FDE8F0;
+  color: var(--color-section-lapse);
+}
+
+.btn-edit {
+  background: #E0F4FD;
+  color: #0288D0;
+}
+
+.error {
+  color: var(--color-section-lapse);
 }
 
 .modal-overlay {
@@ -578,7 +590,7 @@ h1 {
 }
 
 .error {
-  color: var(--color-accent-pink);
+  color: var(--color-section-lapse);
 }
 
 .toast {
